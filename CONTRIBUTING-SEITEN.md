@@ -1,4 +1,4 @@
-# Ajouter ou étoffer une page de Bußgeldrechnen (de-verkehr)
+# Ajouter ou étoffer une page de Bußgeldrechnen
 
 Notice pour les agents qui prolongent le site. À lire en entier avant d'écrire une ligne, avec `~/Documents/GitHub/RECETTE-SITE.md` : §0, §3, §6, §7, §9.3, §11, §17.4, §21, §26.
 
@@ -83,7 +83,7 @@ Ce n'est pas le Chrome de l'éditeur : c'est un Chromium headless.
 ## Contrôles (tous à 0)
 
 ```bash
-cd ~/Documents/GitHub/a-publier/Mottalib-10M/de-verkehr
+cd ~/Documents/GitHub/a-publier/Mottalib-10M/bussgeldrechnen.de
 export NODE_PATH=$(npm root -g):$PWD/node_modules
 npm run build                       # inclut typo-nbsp et check-snippets (bloquant)
 npx vitest run
@@ -104,7 +104,7 @@ node scripts/check-saisie.mjs dist --max=60
 node scripts/check-nombres.mjs dist
 node scripts/typo-nbsp.mjs dist --check
 node scripts/check-url-propre.mjs dist
-node scripts/check-layout.mjs dist > /tmp/layout-de-verkehr.log 2>&1 &
+node scripts/check-layout.mjs dist > /tmp/layout-bussgeldrechnen.log 2>&1 &
 ```
 
 Serveur local : port 4402 (`npm run preview`). Pour l'arrêter : `lsof -ti tcp:4402 | xargs kill`.
