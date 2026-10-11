@@ -117,7 +117,7 @@ export default function BussgeldRechner({ lang = 'de', methodHref, initialMode =
               <NumberField id="bg-kmh" label={t.measured} value={measured} onChange={setMeasured} unit="km/h" max={400} help={t.measuredHelp} lang={lang} />
             </div>
             <div className="grid grid-cols-2 gap-x-4 gap-y-4">
-              <Toggle id="bg-io" label={t.where} value={inner} onChange={setInner} options={[{ value: '1', label: t.inner }, { value: '0', label: t.outer }]} />
+              <SelectField id="bg-io" label={t.where} value={inner} onChange={setInner} options={[{ value: '1', label: t.inner }, { value: '0', label: t.outer }]} />
               <Toggle id="bg-tol" label={t.tol} value={tol} onChange={setTol} options={[{ value: '1', label: t.yes }, { value: '0', label: t.no }]} />
             </div>
             <div className="grid gap-x-4 gap-y-4 sm:grid-cols-2">
