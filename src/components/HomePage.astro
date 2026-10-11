@@ -1,8 +1,9 @@
 ---
 /**
- * Accueil (page pilier, RECETTE §5), conçu pour ce sujet : la recherche dans le catalogue officiel vient
- * d'abord (le visiteur arrive avec un Bescheid ou un Anhörungsbogen et cherche « son » Tatbestand),
- * puis le bloc citable, le tableau de vitesse généré par le moteur, le calculateur complet, le texte.
+ * Accueil (page pilier, RECETTE §5) : le calculateur complet vient d'abord, sur le premier écran
+ * (règle du 2026-10-11), puis la recherche dans le catalogue officiel (le visiteur arrive avec un
+ * Bescheid ou un Anhörungsbogen et cherche « son » Tatbestand), le bloc citable, le tableau de
+ * vitesse généré par le moteur, le texte.
  * Texte : src/content/accueil.ts.
  */
 import PageLayout from '../layouts/PageLayout.astro';
@@ -43,7 +44,11 @@ const quick = ['bussgeldrechner', 'punkterechner', 'kfz-steuer-rechner', 'fahrve
     <p class="mt-3 text-lg text-navy-700">{x.intro}</p>
     <p class="mt-2 text-sm text-navy-700">{de ? 'Rechtsstand' : 'Legal status'} <time datetime={P.retrieved_at}>{displayDate(P.retrieved_at, LANG_TAGS[lang])}</time> · <a href={route('about', lang)} class="underline">{label('about', lang)}</a> · <a href={methodHref} class="underline">{label('method', lang)}</a> · <a href={P.sources.bkatv.url} class="underline" rel="nofollow noopener" target="_blank">BKatV</a> · <a href={P.sources.bmfRechner.url} class="underline" rel="nofollow noopener" target="_blank">{de ? 'BMF-Rechner' : 'BMF calculator'}</a></p>
   </header>
-  <KatalogSuche client:load lang={lang} />
+  <section>
+    <h2 class="text-2xl font-bold text-navy-900">{de ? 'Ihren Fall durchrechnen' : 'Work through your own case'}</h2>
+    <div class="mt-4"><BussgeldRechner client:load lang={lang} methodHref={methodHref} /></div>
+  </section>
+  <div class="mt-8"><KatalogSuche client:load lang={lang} /></div>
   <Clamp text={x.resume} lang={lang} id="clamp-home" sentences={1} class="mt-6 mb-2" />
   <section class="mt-8">
     <h2 class="text-2xl font-bold text-navy-900">{de ? 'Geschwindigkeit: die ganze Tabelle für den Pkw' : 'Speeding: the complete car table'}</h2>
@@ -55,10 +60,6 @@ const quick = ['bussgeldrechner', 'punkterechner', 'kfz-steuer-rechner', 'fahrve
       </table>
       <p class="mt-2 text-xs text-navy-700">{de ? 'P = Punkte, M = Monate Fahrverbot. Gesamt = Regelsatz plus Gebühr und Zustellung nach § 107 OWiG.' : 'P = points, M = months of driving ban. Total = standard fine plus fee and delivery under Section 107 OWiG.'}</p>
     </div>
-  </section>
-  <section class="mt-8">
-    <h2 class="text-2xl font-bold text-navy-900">{de ? 'Ihren Fall durchrechnen' : 'Work through your own case'}</h2>
-    <div class="mt-4"><BussgeldRechner client:load lang={lang} methodHref={methodHref} /></div>
   </section>
   <nav class="mt-8" aria-label={de ? 'Weitere Rechner' : 'More calculators'}>
     <ul class="grid gap-2 sm:grid-cols-3">{quick.map((id) => <li><a href={route(id, lang)} class="block rounded border border-navy-200 px-3 py-2 text-navy-900 hover:border-accent-400">{label(id, lang)}</a></li>)}</ul>
