@@ -1,11 +1,13 @@
 import { defineGuide } from '../../lib/guide-types';
 import { P } from '../../lib/engine/params';
 import { pkw, elektro, krad } from '../../lib/engine/kfzsteuer';
-import { formatMoney } from '../../lib/format';
+import { formatMoney, formatPercent } from '../../lib/format';
 
 const K = P.kfz;
 /** § 11 Abs. 2 KraftStG : seuils et Aufgeld des paiements fractionnés (absents de params-2026.json). */
 const S11 = { halbjahr_ab: 500, vierteljahr_ab: 1000, aufgeld_halb: 0.03, aufgeld_viertel: 0.06 };
+/** § 13 Abs. 2 KraftStG : Rückstand, ab dem die Zulassung verweigert wird. */
+const RUECKSTAND_MIN = 5;
 
 const neu = pkw({ ez: '2024-04-01', fuel: 'benzin', ccm: 1498, co2: 118 });
 const mitte = pkw({ ez: '2016-09-01', fuel: 'diesel', ccm: 1968, co2: 115 });
@@ -36,8 +38,8 @@ export default defineGuide({
     faqs: [
       { q: 'Welches Hauptzollamt ist für meine Kfz-Steuer zuständig?', a: 'Das Hauptzollamt, in dessen Bezirk Sie als Halter wohnen. Sie müssen es nicht selbst suchen: Die Zulassungsstelle meldet die Zulassung samt SEPA-Mandat an die Zollverwaltung, die dann den Bescheid schickt. Adresse und Bankverbindung des Amts stehen auf dem Bescheid; der Zoll nennt beide auch in seiner Dienststellensuche. Seit Juli 2014 verwaltet der Bund die Steuer, nicht mehr das Finanzamt (§ 18 Abs. 7 KraftStG).' },
       { q: 'Schickt der Zoll jedes Jahr eine neue Rechnung für die Kfz-Steuer?', a: 'Nein. Der erste Steuerbescheid gilt unbefristet weiter, solange sich am Fahrzeug nichts ändert (§ 12 Abs. 1 KraftStG). Der Zoll schreibt ausdrücklich, dass er vor der Fälligkeit keine jährlichen Zahlungserinnerungen verschickt. Die Lastschrift kommt am Fälligkeitstag, der sich aus dem Tag der Zulassung ergibt. Wer kein Mandat erteilt hat, muss selbst rechtzeitig überweisen.' },
-      { q: 'Kann ich die Kfz-Steuer halbjährlich oder vierteljährlich zahlen?', a: `Nur bei hohen Beträgen. Halbjährlich geht ab einer Jahressteuer von mehr als ${eD(S11.halbjahr_ab)}, vierteljährlich ab mehr als ${eD(S11.vierteljahr_ab)}. Dafür verlangt § 11 Abs. 2 KraftStG einen Aufschlag von 3 beziehungsweise 6 Prozent auf die Rate. Ein Wechsel ist schriftlich anzuzeigen, spätestens mit der Fälligkeit des neuen Betrags. Für einen typischen Pkw kommt das selten in Frage.` },
-      { q: 'Was passiert, wenn die Lastschrift für die Kfz-Steuer platzt?', a: 'Nach Angaben des Zolls ruht das Lastschriftverfahren nach einer Rücklastschrift, bis es wieder aktiviert wird. Es folgen Mahnung und Säumniszuschläge. Bleibt die Steuer offen, darf das Hauptzollamt die Zulassungsstelle bitten, das Fahrzeug von Amts wegen außer Betrieb zu setzen (§ 14 KraftStG). Außerdem lässt die Zulassungsstelle kein weiteres Fahrzeug zu, solange Rückstände von 5 Euro oder mehr bestehen (§ 13 Abs. 2).' },
+      { q: 'Kann ich die Kfz-Steuer halbjährlich oder vierteljährlich zahlen?', a: `Nur bei hohen Beträgen. Halbjährlich geht ab einer Jahressteuer von mehr als ${eD(S11.halbjahr_ab)}, vierteljährlich ab mehr als ${eD(S11.vierteljahr_ab)}. Dafür verlangt § 11 Abs. 2 KraftStG einen Aufschlag von ${formatPercent(S11.aufgeld_halb, 0, 'de')} beziehungsweise ${formatPercent(S11.aufgeld_viertel, 0, 'de')} auf die Rate. Ein Wechsel ist schriftlich anzuzeigen, spätestens mit der Fälligkeit des neuen Betrags. Für einen typischen Pkw kommt das selten in Frage.` },
+      { q: 'Was passiert, wenn die Lastschrift für die Kfz-Steuer platzt?', a: `Nach Angaben des Zolls ruht das Lastschriftverfahren nach einer Rücklastschrift, bis es wieder aktiviert wird. Es folgen Mahnung und Säumniszuschläge. Bleibt die Steuer offen, darf das Hauptzollamt die Zulassungsstelle bitten, das Fahrzeug von Amts wegen außer Betrieb zu setzen (§ 14 KraftStG). Außerdem lässt die Zulassungsstelle kein weiteres Fahrzeug zu, solange Rückstände von ${eD(RUECKSTAND_MIN)} oder mehr bestehen (§ 13 Abs. 2).` },
       { q: 'Zahle ich Kfz-Steuer für den ganzen Monat, wenn ich am 3. abmelde?', a: 'Nein, die Steuer wird tageweise abgerechnet. Der Tag, an dem die Steuerpflicht endet, zählt nicht mit (§ 9 Abs. 5 KraftStG). Weil Sie im Voraus gezahlt haben, entsteht meist ein Guthaben, das der Zoll nach eigenen Angaben in der Regel drei Wochen nach der Abmeldung erstattet. Eine Mindestdauer von einem Monat gilt nur, wenn ein Fahrzeug insgesamt kürzer zugelassen war (§ 5 Abs. 1 Nr. 1).' },
     ],
     body: (h) => `
@@ -124,7 +126,7 @@ ${h.table(['First registered', 'Basis', 'Example', 'Tax per year'], [
 
 <h2>Paying: the SEPA mandate</h2>
 <p>At the registration office you sign a SEPA direct debit mandate; without it Section 13(1) KraftStG does not allow the car to be registered. The ${h.src('zoll', 'customs website')} confirms that the debit is taken on the due date, once a year and in advance. If you are new to Germany and still waiting for a local bank account, any SEPA account in your name or someone else's will do.</p>
-<p>Instalments exist only for high bills. Above ${h.eur(S11.halbjahr_ab)} a year you may pay half-yearly, above ${h.eur(S11.vierteljahr_ab)} quarterly, each with a surcharge of 3 or 6 per cent (Section 11(2)). For the large petrol car above, two half-yearly payments would be ${h.eur(halb)} each.</p>
+<p>Instalments exist only for high bills. Above ${h.eur(S11.halbjahr_ab)} a year you may pay half-yearly, above ${h.eur(S11.vierteljahr_ab)} quarterly, each with a surcharge of ${h.pct(S11.aufgeld_halb, 0)} or ${h.pct(S11.aufgeld_viertel, 0)} (Section 11(2)). For the large petrol car above, two half-yearly payments would be ${h.eur(halb)} each.</p>
 <h3>Rounding</h3>
 <p>Every amount due is rounded down to the full euro (Section 11(5)). The 2024 petrol example works out at ${h.eur(neu.raw, 2)} and is billed at ${h.eur(neu.annual)}.</p>
 

@@ -144,9 +144,23 @@ export function limitationEnd(iso: string): string {
 }
 
 /** Recherche plein texte dans le catalogue (numéro ou mots), pour l'outil de l'accueil. */
+/** Mots de tous les jours (et leur équivalent anglais) → termes du texte officiel. */
+const SYN: Record<string, string[]> = {
+  handy: ['elektronisches gerät'], smartphone: ['elektronisches gerät'], phone: ['elektronisches gerät'], telefon: ['elektronisches gerät'],
+  rotlicht: ['rotes wechsellichtzeichen', 'rotlicht'], ampel: ['wechsellichtzeichen'], 'red': ['rotes wechsellichtzeichen'],
+  winterreifen: ['glatteis', 'bereifung'], reifen: ['bereifung', 'reifen'], tyres: ['bereifung'],
+  rettungsgasse: ['gasse'], gurt: ['gurt'], seatbelt: ['sicherheitsgurt'], belt: ['sicherheitsgurt'],
+  tüv: ['hauptuntersuchung'], tuev: ['hauptuntersuchung'], mot: ['hauptuntersuchung'],
+  falschparken: ['geparkt'], parken: ['geparkt'], parking: ['geparkt'], halteverbot: ['gehalten', 'halten'],
+  blitzer: ['höchstgeschwindigkeit'], speeding: ['höchstgeschwindigkeit'], alkohol: ['promille', 'alkohol'], alcohol: ['promille', 'alkohol'],
+  cannabis: ['tetrahydrocannabinol'], kiffen: ['tetrahydrocannabinol'], blaulicht: ['blaues blinklicht', 'einsatzfahrzeug'], kind: ['kind'],
+  'e-scooter': ['elektrokleinstfahrzeug'], scooter: ['elektrokleinstfahrzeug'], fahrrad: ['radfahr', 'fahrrad'], bike: ['radfahr'],
+};
 export function search(q: string, limit = 30): BkatEntry[] {
   const s = q.trim().toLowerCase();
   if (!s) return [];
   const words = s.split(/\s+/);
-  return BKAT.entries.filter((e) => e.fine !== null && (e.nr === s || words.every((w) => (e.text + ' ' + e.heading).toLowerCase().includes(w)))).slice(0, limit);
+  const hay = (e: BkatEntry) => (e.text + ' ' + e.heading).toLowerCase();
+  const hit = (h: string, w: string) => h.includes(w) || (SYN[w] ?? []).some((x) => h.includes(x));
+  return BKAT.entries.filter((e) => e.fine !== null && (e.nr === s || words.every((w) => hit(hay(e), w)))).slice(0, limit);
 }

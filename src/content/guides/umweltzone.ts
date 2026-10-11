@@ -18,7 +18,7 @@ export default defineGuide({
   order: 80,
   mini: 'umweltzone',
   related: ['bussgeldrechner', 'bussgeldbescheid', 'kfz-steuer-diesel', 'kfz-steuer-altfahrzeuge', 'tuev-ueberzogen', 'falschparken'],
-  sources: ['bkatAnlage', 'bkatv', 'owig107'],
+  sources: ['bkatAnlage', 'bkatv', 'owig107', 'uba'],
   de: {
     slug: 'umweltzone',
     nav: 'Umweltzone',

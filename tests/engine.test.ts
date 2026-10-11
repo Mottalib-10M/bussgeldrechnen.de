@@ -201,3 +201,9 @@ describe('BMF : 21 cas relevés au Kfz-Steuer-Rechner officiel', () => {
     [krad(689).annual, 51], [anhaenger(750).annual, 29], [anhaenger(3500).annual, 134],
   ])('cas %#', (mine, bmf) => expect(mine).toBe(bmf));
 });
+
+describe('recherche : mots de tous les jours', () => {
+  it.each(['Handy', 'Rotlicht', 'Winterreifen', 'Rettungsgasse', 'Gurt', 'Parkschein', 'Gehweg', 'Hauptuntersuchung', 'phone', 'seatbelt'])('%s trouve des Tatbestände', (w) => {
+    expect(search(w).length).toBeGreaterThan(0);
+  });
+});

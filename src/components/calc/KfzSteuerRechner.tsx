@@ -57,7 +57,7 @@ export default function KfzSteuerRechner({ lang = 'de', methodHref, initialArt =
   const label = (k: string) => (k === 'co2' ? t.co2l : (t as Record<string, string>)[k] ?? k);
   const rows = [
     ...r.lines.filter((l) => l.amount !== 0).map((l) => ({ label: label(l.label), value: $(l.amount, 2) })),
-    { label: t.monthly, value: $(r.annual / 12, 2) },
+    { label: t.monthly, value: $(r.annual / 12) },
     { label: t.regime, value: (t as Record<string, string>)[`r_${r.regime === 'a/b' ? 'ab' : r.regime}`] ?? r.regime },
     ...(art === 'elektro' ? [{ label: t.exempt, value: r.exemptUntil ? displayDate(r.exemptUntil, lang === 'de' ? 'de-DE' : 'en-GB') : t.exemptNo }] : []),
   ];

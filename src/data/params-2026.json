@@ -468,6 +468,13 @@
         "de": "§ 29 FeV: ausländische Fahrerlaubnisse, sechs Monate nach Wohnsitznahme",
         "en": "Section 29 FeV: foreign licences, six months after taking up residence"
       }
+    },
+    "uba": {
+      "url": "https://www.umweltbundesamt.de/themen/luft/luftschadstoffe/feinstaub/umweltzonen-in-deutschland",
+      "label": {
+        "de": "Umweltbundesamt: Umweltzonen in Deutschland (Stand 10.12.2025)",
+        "en": "Federal Environment Agency (UBA): low-emission zones in Germany (as of 10 Dec 2025)"
+      }
     }
   }
 }
