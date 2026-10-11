@@ -1,4 +1,4 @@
-# Bußgeld & Kfz 2026 (German Traffic Fines)
+# Bußgeldrechnen
 
 > Independent German/English site by Radif Partners: the complete official German fine catalogue (Bußgeldkatalog-Verordnung, as amended 12 Aug 2026) read from the legal XML, with fines, Flensburg points (FeV annex 13), probation class A/B (FeV annex 12), procedure fees (§ 107 OWiG), the six-month limitation period in force since 1 July 2026, and an exact German vehicle tax calculator (KraftStG) matching the Federal Finance Ministry calculator in 21 test cases. All calculations run in the browser; no data collected, no referrals to law firms.
 

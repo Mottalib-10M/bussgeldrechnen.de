@@ -1,6 +1,6 @@
 /** Configuration centrale du site (générée par new-site.py). */
-export const SITE_URL = "https://de-verkehr.example";
-export const SITE_NAMES: Record<string, string> = {"de": "Bußgeld & Kfz 2026", "en": "German Traffic Fines"};
+export const SITE_URL = "https://bussgeldrechnen.de";
+export const SITE_NAMES: Record<string, string> = {"de": "Bußgeldrechnen", "en": "Bußgeldrechnen"};
 export const LANG_TAGS: Record<string, string> = {"de": "de-DE", "en": "en-DE"};
 export const OG_LOCALES: Record<string, string> = {"de": "de_DE", "en": "en_GB"};
 /** Une locale par langue (RECETTE §4) : « 1.234 € » en allemand, « €1,234 » en anglais. */
@@ -18,7 +18,7 @@ export const AUTHOR_DESC: Record<string, string> = {"de": "Radif Partners liest 
  *  themes reellement traites par le site, pas une liste de mots-cles : un sujet
  *  declare ici sans page qui le couvre est une declaration fausse. */
 export const KNOWS_ABOUT: Record<string, string[]> = {"de": ["Bußgeldkatalog-Verordnung", "Fahreignungs-Bewertungssystem", "Kraftfahrzeugsteuergesetz", "Fahrerlaubnis auf Probe"], "en": ["German fine catalogue (BKatV)", "Flensburg points system", "German vehicle tax (KraftStG)", "Probationary licence"]};
-export const CONTACT_EMAIL = "contact@de-verkehr.example";
+export const CONTACT_EMAIL = "contact@bussgeldrechnen.de";
 export const THEME_COLOR = '#A3121B';
 export const LOGO_SYMBOL = 'BK';
 export const BING_VERIFY_CODE = '';

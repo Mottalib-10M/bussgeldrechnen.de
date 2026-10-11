@@ -1,6 +1,6 @@
 {
- "name": "Bußgeld & Kfz 2026",
- "short_name": "Bußgeld & Kfz",
+ "name": "Bußgeldrechnen",
+ "short_name": "Bußgeldrechnen",
  "description": "Bußgeldkatalog 2026 im amtlichen Wortlaut mit Gebühren, Punkten und Fahrverbot, dazu ein Kfz-Steuer-Rechner, der in 21 Fällen mit dem Rechner des Bundesfinanzministeriums übereinstimmt.",
  "start_url": "/de/",
  "display": "standalone",
