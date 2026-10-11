@@ -1,0 +1,94 @@
+---
+/** Méthode et sources (page de confiance, RECETTE §8.2) : données, règles appliquées, contrôles, limites. */
+import PageLayout from '../layouts/PageLayout.astro';
+import { route, type Locale } from '../i18n/routes';
+import { P, BKAT } from '../lib/engine/params';
+import { formatMoney, formatDecimal, displayDate } from '../lib/format';
+import { breadcrumbSchema, webPageSchema } from '../lib/seo';
+import { LAST_UPDATED, CONTACT_EMAIL, REVIEW_CYCLE_MONTHS } from '../data/site-config';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const $ = (n: number, d = 0) => formatMoney(n, d, lang);
+const V = P.verfahren, K = P.punkte, T = P.toleranz;
+const title = de ? 'BKatV-Rechner 2026: Methodik, Quellen und Prüffälle' : 'BKatV Calculators 2026: Method, Sources and Test Cases';
+const description = de ? `Methodik 2026: wie wir die BKatV aus dem amtlichen XML lesen, Punkte und Probezeit zuordnen, Gebühren und Kfz-Steuer rechnen und mit 21 BMF-Fällen prüfen.` : `Method 2026: how we read the BKatV from the official XML, assign points and probation classes, compute fees and vehicle tax, and test 21 ministry cases.`;
+const h1 = de ? 'Methodik und Quellen' : 'Method and sources';
+const path = route('method', lang);
+const sources = Object.values(P.sources);
+const d = (iso: string) => displayDate(iso, de ? 'de-DE' : 'en-GB');
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: h1, description, path, lang }), breadcrumbSchema([{ name: de ? 'Start' : 'Home', path: route('home', lang) }, { name: h1, path }])]} breadcrumbs={[{ label: h1 }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{h1}</h1></header>
+  {de ? (
+  <div class="prose prose-slate max-w-none">
+    <p>Alle Rechtswerte dieser Website stehen an zwei Stellen: in einer Datei mit dem Bußgeldkatalog, die ein Skript aus dem amtlichen Text erzeugt, und in einer Parameterdatei mit Gebühren, Fristen und Steuersätzen, geprüft am <time datetime={P.retrieved_at}>{d(P.retrieved_at)}</time>. Seiten und Rechner lesen nur aus diesen beiden Dateien; kein Betrag ist im Text von Hand geschrieben.</p>
+    <h2>Der Bußgeldkatalog aus dem XML</h2>
+    <p>Das Skript <code>scripts/bkat/build-bkat.py</code> liest die Bußgeldkatalog-Verordnung im XML-Format von gesetze-im-internet.de, Stand: {BKAT.stand}. Es übernimmt jede Zeile der Anlage mit laufender Nummer, Tatbestand, Vorschriften und Regelsatz, die Tabellen 1 (Geschwindigkeit), 2 (Abstand) und 4 (Erhöhung bei Gefährdung und Sachbeschädigung) des Anhangs. Unterpunkte wie „mit Gefährdung“ werden mit dem übergeordneten Tatbestand zu einem lesbaren Satz verbunden. Ergebnis: {BKAT.entries.length} Tatbestände mit festem Betrag und vollständige Tabellen. Ändert der Verordnungsgeber den Text, genügt ein neuer Lauf.</p>
+    <h2>Punkte und Probezeit</h2>
+    <p>Die Punkte kommen aus Anlage 13 der Fahrerlaubnis-Verordnung, die die Nummern des Katalogs ausdrücklich aufzählt; wir haben diese Listen übernommen, und das Skript bricht ab, wenn eine dort genannte Nummer im Katalog fehlt. Für die Probezeit ordnen wir jede punktbewehrte Nummer nach Anlage 12 der Gruppe A (schwerwiegend) oder B (weniger schwerwiegend) zu, nach der verletzten Vorschrift der StVO. Verstöße ohne Punkte werden nicht ins Fahreignungsregister eingetragen und sind für die Probezeit ohne Bedeutung.</p>
+    <h2>Regeln, die der Bußgeldrechner anwendet</h2>
+    <ul>
+      <li><strong>Toleranzabzug</strong>: {T.kmh_bis_100} km/h bis {T.grenze_kmh} km/h Messwert, darüber 3 Prozent, abgerundet zugunsten des Fahrers, nach den Verkehrsfehlergrenzen der Physikalisch-Technischen Bundesanstalt. Manche Messverfahren arbeiten mit anderen Abzügen; der Rechner lässt den Abzug deshalb abschalten.</li>
+      <li><strong>Gebühren</strong> nach § 107 OWiG: fünf Prozent, mindestens {$(V.gebuehr_min)}, höchstens {$(V.gebuehr_max)}, plus {$(V.zustellung, 2)} Zustellung, nur bei Regelsätzen über {$(V.verwarnung_max)}.</li>
+      <li><strong>Vorsatz</strong> (§ 3 Abs. 4a BKatV): Regelsätze über {$(V.verwarnung_max)} verdoppelt, abgerundet.</li>
+      <li><strong>Gefährdung und Sachbeschädigung</strong> (§ 3 Abs. 3 BKatV): Erhöhung nach Tabelle 4, wenn der Tatbestand die Folge nicht schon enthält.</li>
+      <li><strong>Beharrlichkeit</strong> (§ 4 Abs. 2 BKatV): ein Monat Fahrverbot bei erneuten {V.beharrlich_kmh} km/h binnen eines Jahres.</li>
+      <li><strong>Voreintragungen</strong> nur dort, wo der Katalog sie vorsieht (Alkohol, Cannabis, berauschende Mittel, Gefahrgutstrecken), wie § 3 Abs. 1 BKatV es bestimmt.</li>
+    </ul>
+    <h2>Punkte, Fristen, Verjährung</h2>
+    <p>Der Punkterechner folgt § 4 StVG: Stufen bei {K.ermahnung_ab}, {K.verwarnung_ab} und {K.entzug_ab} Punkten, Herabsetzung auf {K.ermahnung_reset} oder {K.verwarnung_reset} Punkte bei übersprungener Maßnahme, Seminar-Abzug bei einem bis fünf Punkten. Die Tilgung folgt § 29 StVG ({formatDecimal(K.tilgung_1p_monate / 12, 1, lang)}, {formatDecimal(K.tilgung_2p_monate / 12, 1, lang)} und {formatDecimal(K.tilgung_3p_monate / 12, 1, lang)} Jahre ab Rechtskraft, dann ein Jahr Überliegefrist). Die Verfolgungsverjährung beträgt nach § 26 Abs. 3 StVG seit dem 1. Juli 2026 sechs Monate; Unterbrechungen nach § 33 OWiG bildet der Fristenrechner nicht ab.</p>
+    <h2>Kraftfahrzeugsteuer</h2>
+    <p>Der Kfz-Steuer-Rechner setzt § 9 KraftStG für Pkw in den drei Zulassungszeiträumen um, dazu § 3d (Elektroautos), § 3a (Schwerbehinderte), § 18 Abs. 4a (Übergang 2008/2009) und die Abrundung nach § 11 Abs. 5. Am 11. Oktober 2026 haben wir 21 Fälle in den Kfz-Steuer-Rechner des Bundesfinanzministeriums eingegeben: Benziner und Diesel aller Zeiträume, Euro 1, 2 und 3, Elektroautos, Motorrad, Anhänger. Alle 21 Ergebnisse stimmen auf den Euro überein und laufen als Tests mit.</p>
+    <h2>Tests</h2>
+    <p>Vor jeder Veröffentlichung prüfen automatische Tests die Lesung des Katalogs (bekannte Nummern mit ihrem Betrag), jede Geschwindigkeitsstufe, Abstand, Rotlicht, Handy, Alkohol, Gebühren, Punkte, Tilgung, Probezeit, die Kfz-Steuer und die Kostenrechner. Schlägt ein Test fehl, wird nicht veröffentlicht.</p>
+    <h2>Was die Rechner nicht können</h2>
+    <ul>
+      <li>Abweichungen der Behörde oder des Gerichts im Einzelfall, etwa eine Erhöhung statt Fahrverbot (§ 4 Abs. 4 BKatV), vorhersagen.</li>
+      <li>Messungen oder Bescheide prüfen; das ist keine Rechtsberatung.</li>
+      <li>Strafen im Strafverfahren (§ 316 StGB) berechnen; dafür gibt es keinen Katalog.</li>
+      <li>Blutalkohol aus Getränken schätzen; dafür gibt es keine amtliche Formel.</li>
+      <li>Lkw über 3,5 t und Saisonkennzeichen bei der Kfz-Steuer abbilden.</li>
+      <li>Preise freier Anbieter (Fahrschulen, Überwachungsorganisationen, MPU-Stellen) kennen; sie sind Eingabefelder.</li>
+    </ul>
+    <h2>Quellen</h2>
+    <ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener" target="_blank">{s.label.de}</a></li>)}</ul>
+    <p>Prüfrhythmus: mindestens alle {REVIEW_CYCLE_MONTHS} Monate und bei jeder Änderung der Vorschriften. Fehler bitte an <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Letzte Prüfung: <time datetime={LAST_UPDATED}>{d(LAST_UPDATED)}</time>.</p>
+  </div>
+  ) : (
+  <div class="prose prose-slate max-w-none">
+    <p>Every legal value on this site lives in two places: a fine-catalogue file generated by a script from the official text, and a parameter file with fees, deadlines and tax rates, checked on <time datetime={P.retrieved_at}>{d(P.retrieved_at)}</time>. Pages and calculators only read from these two files; no amount is typed into the text by hand.</p>
+    <h2>The fine catalogue from the official XML</h2>
+    <p>The script <code>scripts/bkat/build-bkat.py</code> reads the Fine Catalogue Ordinance (BKatV) in XML from gesetze-im-internet.de, the federal law portal, as amended: {BKAT.stand}. It takes every line of the annex with its number, offence, legal references and standard fine, plus tables 1 (speed), 2 (distance) and 4 (increase for endangering others or damage) of the appendix. Sub-items such as “with endangerment” are joined to their parent offence so they read as one sentence. The result is {BKAT.entries.length} fixed-amount offences and complete tables, rebuilt with one run whenever the text changes.</p>
+    <h2>Points and probation</h2>
+    <p>Points come from annex 13 of the Driving Licence Ordinance, which lists catalogue numbers explicitly; we copied those lists, and the script stops if a listed number is missing from the catalogue. For probation, each offence carrying points is classed A (serious) or B (less serious) under annex 12, according to the traffic rule broken. Offences without points are not entered in the register and play no role in probation.</p>
+    <h2>Rules the fine calculator applies</h2>
+    <ul>
+      <li><strong>Tolerance</strong>: {T.kmh_bis_100} km/h up to {T.grenze_kmh} km/h measured, 3 per cent above, rounded in the driver's favour, following the error limits of the national metrology institute PTB. Some measuring methods use other deductions, so the deduction can be switched off.</li>
+      <li><strong>Fees</strong> under Section 107 OWiG: five per cent, at least {$(V.gebuehr_min)}, at most {$(V.gebuehr_max)}, plus {$(V.zustellung, 2)} for delivery, only for fines above {$(V.verwarnung_max)}.</li>
+      <li><strong>Intent</strong> (Section 3(4a) BKatV): fines above {$(V.verwarnung_max)} doubled, rounded down.</li>
+      <li><strong>Endangerment and damage</strong> (Section 3(3) BKatV): increase under table 4 unless the offence already includes it.</li>
+      <li><strong>Persistence</strong> (Section 4(2) BKatV): a one-month ban for another {V.beharrlich_kmh} km/h within a year.</li>
+      <li><strong>Earlier entries</strong> only where the catalogue provides for them (alcohol, cannabis, drugs, hazardous-goods routes), as Section 3(1) BKatV states.</li>
+    </ul>
+    <h2>Points, deadlines, limitation</h2>
+    <p>The points calculator follows Section 4 StVG: stages at {K.ermahnung_ab}, {K.verwarnung_ab} and {K.entzug_ab} points, lowering to {K.ermahnung_reset} or {K.verwarnung_reset} when a stage was skipped, seminar deduction at one to five points. Expiry follows Section 29 StVG ({formatDecimal(K.tilgung_1p_monate / 12, 1, lang)}, {formatDecimal(K.tilgung_2p_monate / 12, 1, lang)} and {formatDecimal(K.tilgung_3p_monate / 12, 1, lang)} years from the decision becoming final, then one more year). Since 1 July 2026 the limitation period is six months under Section 26(3) StVG; interruptions under Section 33 OWiG are not modelled by the deadline tool.</p>
+    <h2>Vehicle tax</h2>
+    <p>The vehicle tax calculator applies Section 9 KraftStG for cars in all three registration periods, plus Section 3d (electric cars), Section 3a (disability), Section 18(4a) (2008/2009 transition) and rounding under Section 11(5). On 11 October 2026 we entered 21 cases into the Federal Finance Ministry calculator: petrol and diesel cars of every period, Euro 1, 2 and 3, electric cars, a motorbike and trailers. All 21 match to the euro and run as tests.</p>
+    <h2>Tests</h2>
+    <p>Before each release, automated tests check the catalogue reading (known numbers with their amounts), every speed band, tailgating, red lights, phones, alcohol, fees, points, expiry, probation, vehicle tax and the cost calculators. A failing test blocks the release.</p>
+    <h2>What the calculators cannot do</h2>
+    <ul>
+      <li>Predict an authority's or court's departure in an individual case, such as a higher fine instead of a ban (Section 4(4) BKatV).</li>
+      <li>Review measurements or notices; this is not legal advice.</li>
+      <li>Calculate criminal penalties (Section 316 StGB); there is no catalogue for them.</li>
+      <li>Estimate blood alcohol from drinks; there is no official formula.</li>
+      <li>Cover lorries over 3.5 t and seasonal plates for vehicle tax.</li>
+      <li>Know prices set freely by driving schools, inspection organisations or MPU centres; those are input fields.</li>
+    </ul>
+    <h2>Sources</h2>
+    <ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener" target="_blank">{s.label.en}</a></li>)}</ul>
+    <p>Review cycle: at least every {REVIEW_CYCLE_MONTHS} months and whenever the rules change. Errors to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Last check: <time datetime={LAST_UPDATED}>{d(LAST_UPDATED)}</time>.</p>
+  </div>
+  )}
+</PageLayout>

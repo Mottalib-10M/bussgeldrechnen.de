@@ -1,0 +1,70 @@
+---
+/**
+ * Accueil (page pilier, RECETTE §5), conçu pour ce sujet : la recherche dans le catalogue officiel vient
+ * d'abord (le visiteur arrive avec un Bescheid ou un Anhörungsbogen et cherche « son » Tatbestand),
+ * puis le bloc citable, le tableau de vitesse généré par le moteur, le calculateur complet, le texte.
+ * Texte : src/content/accueil.ts.
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import KatalogSuche from './calc/KatalogSuche';
+import BussgeldRechner from './calc/BussgeldRechner';
+import Clamp from './Clamp.astro';
+import { HOME } from '../content/accueil';
+import { route, ROUTES, type Locale } from '../i18n/routes';
+import { label } from '../i18n/nav';
+import { helpers, markNr } from '../lib/helpers';
+import { P, BKAT } from '../lib/engine/params';
+import type { SourceKey } from '../lib/engine/params';
+import { fees } from '../lib/engine/bkat';
+import { formatMoney, displayDate } from '../lib/format';
+import { faqSchema, organizationSchema, websiteSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
+import { LAST_UPDATED, LANG_TAGS } from '../data/site-config';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const x = HOME[lang];
+const h = helpers(lang);
+const path = route('home', lang);
+const parts = (de ? markNr(x.body(h)) : x.body(h)).split(/<!--mini:([A-Za-z0-9_]+)-->/);
+const keys: SourceKey[] = ['bkatv', 'bkatAnlage', 'bkatAnhang', 'fevAnl13', 'fevAnl12', 'stvg4', 'stvg26', 'owig107', 'ptb', 'kraftstg', 'bmfRechner', 'kbaAuskunft'];
+const sources = keys.map((k) => ({ name: P.sources[k].label[lang], url: P.sources[k].url }));
+const jsonLd = [websiteSchema(lang), organizationSchema(lang), webPageSchema({ name: x.h1, description: x.description, path, lang }), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), faqSchema(x.faqs, lang)];
+const methodHref = route('method', lang);
+const $ = (n: number) => formatMoney(n, 0, lang);
+const rows = BKAT.speed.filter((r) => r.cls === 'c');
+const band = (r: (typeof rows)[number]) => (r.hi === null ? (de ? `über ${r.lo - 1}` : `over ${r.lo - 1}`) : r.lo === 0 ? (de ? `bis ${r.hi}` : `up to ${r.hi}`) : `${r.lo}–${r.hi}`);
+const cell = (fine: number, pt: number, fv: number) => `${$(fine)} · ${pt} P${fv ? ` · ${fv} M` : ''}`;
+const quick = ['bussgeldrechner', 'punkterechner', 'kfz-steuer-rechner', 'fahrverbot', 'probezeit-fuehrerschein', 'verjaehrung-bussgeld'].filter((id) => ROUTES.some((r) => r.id === id));
+---
+<PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={x.faqs} sources={sources}>
+  <header class="mb-4">
+    <p class="text-sm font-semibold uppercase tracking-wide text-accent-700">{de ? 'Amtlicher Katalog, neutral gerechnet' : 'The official catalogue, calculated neutrally'}</p>
+    <h1 class="mt-1 text-3xl font-bold text-navy-900 md:text-4xl">{x.h1}</h1>
+    <p class="mt-3 text-lg text-navy-700">{x.intro}</p>
+    <p class="mt-2 text-sm text-navy-700">{de ? 'Rechtsstand' : 'Legal status'} <time datetime={P.retrieved_at}>{displayDate(P.retrieved_at, LANG_TAGS[lang])}</time> · <a href={route('about', lang)} class="underline">{label('about', lang)}</a> · <a href={methodHref} class="underline">{label('method', lang)}</a> · <a href={P.sources.bkatv.url} class="underline" rel="nofollow noopener" target="_blank">BKatV</a> · <a href={P.sources.bmfRechner.url} class="underline" rel="nofollow noopener" target="_blank">{de ? 'BMF-Rechner' : 'BMF calculator'}</a></p>
+  </header>
+  <KatalogSuche client:load lang={lang} />
+  <Clamp text={x.resume} lang={lang} id="clamp-home" sentences={1} class="mt-6 mb-2" />
+  <section class="mt-8">
+    <h2 class="text-2xl font-bold text-navy-900">{de ? 'Geschwindigkeit: die ganze Tabelle für den Pkw' : 'Speeding: the complete car table'}</h2>
+    <p class="mt-2 text-navy-800">{de ? 'Tabelle 1 Buchstabe c des Anhangs zur BKatV, mit Punkten nach Anlage 13 FeV und dem Gesamtbetrag, wenn ein Bescheid ergeht.' : 'Table 1 letter c of the BKatV appendix, with points under FeV annex 13 and the total once a fine notice is issued.'}</p>
+    <div class="not-prose my-4 overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead><tr class="border-b border-navy-300 text-left text-xs uppercase tracking-wide text-navy-700"><th scope="col" class="py-2 pr-3">km/h</th><th scope="col" class="py-2 pr-3">{de ? 'Innerorts' : 'In town'}</th><th scope="col" class="py-2 pr-3">{de ? 'Außerorts' : 'Outside towns'}</th><th scope="col" class="py-2 text-right">{de ? 'Gesamt innerorts' : 'Total in town'}</th></tr></thead>
+        <tbody>{rows.map((r) => <tr class="border-b border-navy-100"><td class="tabular-nums py-2 pr-3 text-navy-900">{band(r)}</td><td class="tabular-nums py-2 pr-3 text-navy-800">{cell(r.inner, r.ptInner, r.fvInner)}</td><td class="tabular-nums py-2 pr-3 text-navy-800">{cell(r.outer, r.ptOuter, r.fvOuter)}</td><td class="tabular-nums py-2 text-right font-semibold text-navy-900">{formatMoney(r.inner + fees(r.inner).total, fees(r.inner).total % 1 ? 2 : 0, lang)}</td></tr>)}</tbody>
+      </table>
+      <p class="mt-2 text-xs text-navy-700">{de ? 'P = Punkte, M = Monate Fahrverbot. Gesamt = Regelsatz plus Gebühr und Zustellung nach § 107 OWiG.' : 'P = points, M = months of driving ban. Total = standard fine plus fee and delivery under Section 107 OWiG.'}</p>
+    </div>
+  </section>
+  <section class="mt-8">
+    <h2 class="text-2xl font-bold text-navy-900">{de ? 'Ihren Fall durchrechnen' : 'Work through your own case'}</h2>
+    <div class="mt-4"><BussgeldRechner client:load lang={lang} methodHref={methodHref} /></div>
+  </section>
+  <nav class="mt-8" aria-label={de ? 'Weitere Rechner' : 'More calculators'}>
+    <ul class="grid gap-2 sm:grid-cols-3">{quick.map((id) => <li><a href={route(id, lang)} class="block rounded border border-navy-200 px-3 py-2 text-navy-900 hover:border-accent-400">{label(id, lang)}</a></li>)}</ul>
+  </nav>
+  <div class="prose prose-slate mt-8 max-w-none">
+    {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : null)}
+  </div>
+  <p class="mt-6 text-sm text-navy-700">{de ? 'Stand der Daten:' : 'Data as of:'} <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, LANG_TAGS[lang])}</time> · BKatV {BKAT.stand}</p>
+</PageLayout>

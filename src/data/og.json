@@ -1,0 +1,20 @@
+{
+ "accent": "#A3121B",
+ "symbol": "BK",
+ "variants": [
+  {
+   "file": "og-de.png",
+   "title": "Bußgeldkatalog 2026\nPunkte · Fahrverbot · Kfz-Steuer",
+   "subtitle": "Amtliche BKatV-Tabelle, neutral gerechnet",
+   "badge": "Stand 2026",
+   "brand": "Bußgeld & Kfz 2026"
+  },
+  {
+   "file": "og-en.png",
+   "title": "German fine catalogue 2026\nPoints · driving bans · car tax",
+   "subtitle": "The official BKatV table, calculated neutrally",
+   "badge": "2026 rules",
+   "brand": "German Traffic Fines"
+  }
+ ]
+}

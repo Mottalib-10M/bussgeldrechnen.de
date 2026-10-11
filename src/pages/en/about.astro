@@ -1,0 +1,26 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { YEAR, LAST_UPDATED, AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { BKAT } from '../../lib/engine/params';
+const lang = 'en';
+---
+<PageLayout title="Radif Partners: who publishes this traffic fines guide" description="Who publishes the German fine catalogue and calculators on this site in 2026, why there are no law firms or data collection, and how official texts are read." lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'About', path: route('about', lang) }])]} breadcrumbs={[{ label: 'About' }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">About this website</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>Radif Partners publishes independent calculators and guides on money and paperwork in several countries. This site answers the question that follows a speed camera flash, a parking ticket or a letter from a German fine office: what will this really cost me, with fees, points and any driving ban? It also covers the yearly bill every car owner in Germany pays, the vehicle tax, and it does so in German and in English for the many people who drive in Germany without having grown up with its forms.</p>
+    <h2>Why another fines site</h2>
+    <p>Search for the German fine catalogue and most results come from sites that earn money by passing readers to law firms. Their summaries are written by hand and fall behind: in October 2026 widely used calculators still quoted a minimum fee of 23.50 euros and a three-month limitation period, although six months have applied since 1 July 2026. A mistake like that can lead someone to misjudge a deadline.</p>
+    <p>Our aim is simple to state: to do better than the first Google result by calculating the full amount actually due from the official 2026 BKatV table, read line by line from the legal text, including the notice fees, the speed tolerance, points, probation and the six-month limitation period in force since July, without steering anyone to a lawyer or collecting data.</p>
+    <h2>How we work</h2>
+    <p>A script reads the Fine Catalogue Ordinance in XML from gesetze-im-internet.de and produces the {BKAT.entries.length} fixed-amount offences and the speed and distance tables. Points come from annex 13 of the Driving Licence Ordinance, probation classes from annex 12. For vehicle tax we compared 21 cases with the Federal Finance Ministry calculator, with identical results. The <a href={route('method', lang)}>method page</a> has the details.</p>
+    <h2>What we are not</h2>
+    <p>We are not an authority, the police, a law firm or a notice-checking service. We give no legal advice on individual cases, recommend no one and receive no commissions. The calculators show the standard rates for ordinary circumstances; authorities and courts may depart from them.</p>
+    <h2>Funding</h2><p>Using the catalogue and the calculators costs nothing. Should adverts appear one day, none will be placed above a calculator, and what you type into a calculator never leaves your device.</p>
+    <h2>Reporting an error</h2><p>Has an amount changed or does a calculator get something wrong? Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. See also our <a href={route('editorial', lang)}>editorial policy</a> and the <a href={route('terms', lang)}>legal notice</a>.</p>
+    <p class="text-sm text-navy-600">Legal status {YEAR}, checked on <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, 'en-GB')}</time>.</p>
+  </div>
+</PageLayout>

@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, REVIEW_CYCLE_MONTHS } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title="Editorial policy: sources, checks and corrections" description="Where the fines, points and tax rates on this German traffic site come from, who is responsible for them, how often they are checked and what happens to reported errors." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Editorial and corrections policy</h1>
+    <p>A fine notice, a looming driving ban or the tax on a newly imported car are questions where a wrong figure costs money, often in a system you did not grow up with. This is how we work.</p>
+    <h2>Responsibility</h2><p>{AUTHOR_NAME} is responsible for content and calculations. Contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Primary sources only</h2>
+    <p>No figure is copied from another guide, a forum or a law firm's website. We read:</p>
+    <ul>
+      <li>the <strong>Fine Catalogue Ordinance</strong> with its annex and appendix, read automatically from the official XML on gesetze-im-internet.de;</li>
+      <li>the <strong>Driving Licence Ordinance</strong> (annexes 12 and 13 on probation and points) and the <strong>Road Traffic Act</strong>;</li>
+      <li>the <strong>Motor Vehicle Tax Act</strong>, cross-checked with the Federal Finance Ministry calculator;</li>
+      <li>the <strong>road traffic fee schedule</strong> and the Administrative Offences Act for fees;</li>
+      <li>information from authorities such as the Federal Motor Transport Authority, customs, the national metrology institute PTB and the police.</li>
+    </ul>
+    <h2>No referrals</h2><p>We earn nothing from law firms, notice-checking services, insurers or driving schools and name none of them. Should that ever change, it would be stated on every page concerned.</p>
+    <h2>Tests before each release</h2><p>Automated tests run before each release: standard fines from the official text, points and deadlines, fees and 21 comparison cases from the Finance Ministry's vehicle tax calculator. If a value differs, nothing is published.</p>
+    <h2>Review cycle</h2><p>A full review at least every {REVIEW_CYCLE_MONTHS} months and whenever the ordinances change. The date on each page comes from the parameter file.</p>
+    <h2>Handling errors</h2>
+    <ol><li>Check against the primary source.</li><li>Fix the data or code and add a test.</li><li>New date on the page; a significant correction is flagged on the page itself.</li></ol>
+    <p>See also the <a href={route('method', lang)}>method page</a>. Version: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

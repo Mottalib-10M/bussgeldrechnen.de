@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, REVIEW_CYCLE_MONTHS } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'de';
+---
+<PageLayout title="Redaktionsrichtlinien: Quellen, Prüfung und Korrekturen" description="Woher die Bußgelder, Punkte und Steuersätze auf dieser Website stammen, wer dafür verantwortlich ist, wie oft wir sie prüfen und was mit gemeldeten Fehlern geschieht." lang={lang} noindex={true} breadcrumbs={[{ label: 'Redaktionsrichtlinien' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Redaktionsrichtlinien und Korrekturen</h1>
+    <p>Ein Bußgeldbescheid, ein drohendes Fahrverbot oder die Steuer für ein neues Auto sind Fragen, bei denen eine falsche Zahl Geld kostet. Hier steht, wie wir arbeiten.</p>
+    <h2>Verantwortung</h2><p>Für Inhalte und Berechnungen ist {AUTHOR_NAME} verantwortlich. Kontakt: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Nur Primärquellen</h2>
+    <p>Kein Regelsatz stammt aus einem anderen Ratgeber, einem Forum oder der Website einer Kanzlei. Wir lesen:</p>
+    <ul>
+      <li>die <strong>Bußgeldkatalog-Verordnung</strong> mit Anlage und Anhang, als XML von gesetze-im-internet.de maschinell eingelesen;</li>
+      <li>die <strong>Fahrerlaubnis-Verordnung</strong> (Anlagen 12 und 13 für Probezeit und Punkte) und das <strong>Straßenverkehrsgesetz</strong>;</li>
+      <li>das <strong>Kraftfahrzeugsteuergesetz</strong> und den Rechner des Bundesfinanzministeriums als Gegenprobe;</li>
+      <li>die <strong>Gebührenordnung für Maßnahmen im Straßenverkehr</strong> und das Gesetz über Ordnungswidrigkeiten für Gebühren;</li>
+      <li>Angaben von Behörden wie dem Kraftfahrt-Bundesamt, dem Zoll, der Physikalisch-Technischen Bundesanstalt und der Polizei.</li>
+    </ul>
+    <h2>Keine Vermittlung</h2><p>Wir verdienen nicht an Kanzleien, Prüfdiensten für Bescheide, Versicherern oder Fahrschulen und nennen keine von ihnen. Sollte sich das je ändern, stünde es auf jeder betroffenen Seite.</p>
+    <h2>Tests vor jeder Veröffentlichung</h2><p>Vor jeder Veröffentlichung laufen automatische Tests: Regelsätze aus dem amtlichen Text, Punkte und Fristen, Gebühren und 21 Vergleichsfälle aus dem Kfz-Steuer-Rechner des Bundesfinanzministeriums. Weicht ein Wert ab, wird nicht veröffentlicht.</p>
+    <h2>Prüfrhythmus</h2><p>Vollständige Prüfung mindestens alle {REVIEW_CYCLE_MONTHS} Monate und bei jeder Änderung der Verordnungen. Das Datum auf den Seiten kommt aus der Parameterdatei.</p>
+    <h2>Umgang mit Fehlern</h2>
+    <ol><li>Prüfung an der Primärquelle.</li><li>Korrektur der Daten oder des Codes, neuer Testfall.</li><li>Neues Datum auf der Seite; eine wesentliche Korrektur wird auf der Seite selbst vermerkt.</li></ol>
+    <p>Siehe auch die <a href={route('method', lang)}>Methodik</a>. Fassung: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

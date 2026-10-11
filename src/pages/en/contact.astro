@@ -1,0 +1,23 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, REVIEW_CYCLE_MONTHS } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title="Contact: report an error in a fine or vehicle tax calculator" description="Write to us if a standard fine has changed, a calculator gives a wrong result or you would like to embed the fine calculator. We cannot advise on individual fine notices." lang={lang} noindex={true} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>Every message is read: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. English or German, both are fine.</p>
+    <h2>Reporting an error</h2>
+    <p>Send the page address and, for a calculation, the link from the address bar, which contains your inputs. Tell us what makes you doubt the figure: a catalogue number, a section of the StVG or KraftStG, a tax notice with a different amount (please remove names and file numbers). Every confirmed error is fixed and added as a test case, as described in our <a href={route('editorial', lang)}>editorial policy</a>.</p>
+    <h2>Embedding the calculator</h2>
+    <p>Driving schools, expat associations, employers with company cars and newsrooms can embed the fine calculator free of charge. The code is on the <a href={route('widget', lang)}>embed page</a>.</p>
+    <h2>What we do not do</h2>
+    <p>We do not advise on individual fine notices, check speed measurements or recommend law firms, experts or driving schools. For your own case, the fine office, the licensing authority or a legal adviser is the right contact.</p>
+    <h2>Response time</h2><p>Usually within five working days, error reports first. All legal values are reviewed at least every {REVIEW_CYCLE_MONTHS} months and whenever a law changes.</p>
+    <h2>Provider</h2>
+    <LegalIdentity lang={lang} />
+    <p>See the <a href={route('terms', lang)}>legal notice</a>. Responsible: {AUTHOR_NAME}. Updated: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

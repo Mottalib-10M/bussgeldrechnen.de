@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { YEAR, LAST_UPDATED, AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { BKAT } from '../../lib/engine/params';
+const lang = 'de';
+---
+<PageLayout title="Radif Partners: wer diesen Bußgeldkatalog herausgibt" description="Wer den Bußgeldkatalog und die Rechner dieser Website 2026 herausgibt, warum ohne Kanzleien und Datensammlung und wie wir die amtlichen Texte genau lesen." lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Start', path: route('home', lang) }, { name: 'Über uns', path: route('about', lang) }])]} breadcrumbs={[{ label: 'Über uns' }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">Über diese Website</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>Radif Partners gibt unabhängige Rechner und Ratgeber zu Geld- und Verwaltungsfragen in mehreren Ländern heraus. Diese Website beantwortet eine Frage, die in Deutschland jeden Tag Tausende Menschen nach einem Blitzer, einem Strafzettel oder einem Brief der Bußgeldstelle stellen: Was kostet mich das wirklich, mit Gebühren, Punkten und Fahrverbot? Dazu kommt die zweite Rechnung jedes Halters, die Kraftfahrzeugsteuer.</p>
+    <h2>Was wir besser machen wollen</h2>
+    <p>Wer nach dem Bußgeldkatalog sucht, landet heute vor allem auf Seiten, die ihr Geld mit der Weitergabe an Anwaltskanzleien verdienen. Ihre Zusammenfassungen sind von Hand geschrieben und veralten: Im Oktober 2026 nannten verbreitete Rechner noch Mindestgebühren von 23,50 Euro und eine Verjährung von drei Monaten, obwohl seit dem 1. Juli 2026 sechs Monate gelten. Ein solcher Fehler kann dazu führen, dass jemand eine Frist falsch einschätzt.</p>
+    <p>Diese Website rechnet deshalb so, dass besser als der erste Treffer bei Google nicht nur ein Versprechen ist: Sie ermittelt den Gesamtbetrag aus der amtlichen Tabelle der BKatV 2026, Zeile für Zeile aus dem Gesetzestext gelesen, mit Gebühren des Bescheids, Toleranzabzug, Punkten, Probezeit und der seit Juli geltenden Verjährung von sechs Monaten, ohne auf eine Kanzlei zu verweisen und ohne Daten zu sammeln.</p>
+    <h2>Wie wir arbeiten</h2>
+    <p>Ein Skript liest die Bußgeldkatalog-Verordnung im XML-Format von gesetze-im-internet.de und erzeugt daraus die {BKAT.entries.length} Tatbestände mit festem Betrag und die Tabellen für Geschwindigkeit und Abstand. Die Punkte stammen aus Anlage 13 der Fahrerlaubnis-Verordnung, die Probezeit-Einstufung aus Anlage 12. Für die Kraftfahrzeugsteuer haben wir 21 Fälle mit dem Rechner des Bundesfinanzministeriums verglichen, mit identischem Ergebnis. Alles Weitere steht in der <a href={route('method', lang)}>Methodik</a>.</p>
+    <h2>Was wir nicht sind</h2>
+    <p>Wir sind keine Behörde, keine Polizei, keine Kanzlei und kein Prüfdienst für Bescheide. Wir geben keine Rechtsberatung im Einzelfall, empfehlen niemanden und erhalten keine Provisionen. Die Rechner zeigen die Regelsätze für gewöhnliche Umstände; Behörden und Gerichte können abweichen.</p>
+    <h2>Finanzierung</h2><p>Katalog und Rechner kosten nichts. Erscheint eines Tages Werbung, dann nie oberhalb eines Rechners, und was Sie in einen Rechner tippen, verlässt Ihr Gerät nicht.</p>
+    <h2>Englische Fassung</h2><p>Jede Seite gibt es auch auf Englisch, für Menschen, die in Deutschland leben und fahren und deutsche Behördenbriefe verstehen wollen. Fachbegriffe werden dort beim ersten Auftreten erklärt.</p>
+    <h2>Fehler melden</h2><p>Hat sich ein Betrag geändert oder rechnet ein Rechner falsch? Schreiben Sie an <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Siehe auch die <a href={route('editorial', lang)}>Redaktionsrichtlinien</a> und das <a href={route('terms', lang)}>Impressum</a>.</p>
+    <p class="text-sm text-navy-600">Rechtsstand {YEAR}, geprüft am <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, 'de-DE')}</time>.</p>
+  </div>
+</PageLayout>

@@ -1,0 +1,23 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, REVIEW_CYCLE_MONTHS } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'de';
+---
+<PageLayout title="Kontakt: Fehler im Bußgeld- oder Kfz-Steuer-Rechner melden" description="Schreiben Sie uns, wenn sich ein Regelsatz geändert hat, ein Rechner falsch rechnet oder Sie den Bußgeldrechner einbinden möchten. Keine Beratung zu einzelnen Bescheiden." lang={lang} noindex={true} breadcrumbs={[{ label: 'Kontakt' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Kontakt</h1>
+    <p>Jede Nachricht wird gelesen: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Einen Fehler melden</h2>
+    <p>Schicken Sie uns die Adresse der Seite und, bei einer Berechnung, den Link aus der Adresszeile, der Ihre Eingaben enthält. Hilfreich ist die Fundstelle, die Sie an der Zahl zweifeln lässt: die Nummer im Bußgeldkatalog, ein Paragraf des StVG oder KraftStG, ein Bescheid des Hauptzollamts mit anderem Betrag (bitte ohne Namen und Aktenzeichen). Jeder bestätigte Fehler wird korrigiert und als Testfall aufgenommen, wie es die <a href={route('editorial', lang)}>Redaktionsrichtlinien</a> beschreiben.</p>
+    <h2>Den Rechner einbinden</h2>
+    <p>Fahrschulen, Vereine, Arbeitgeber mit Fuhrpark und Redaktionen können den Bußgeldrechner kostenlos per iframe einbinden. Den Code gibt es auf der Seite <a href={route('widget', lang)}>Rechner einbinden</a>.</p>
+    <h2>Was wir nicht tun</h2>
+    <p>Wir beraten nicht zu einzelnen Bescheiden, prüfen keine Messungen und empfehlen keine Kanzleien, Gutachter oder Fahrschulen. Für Ihren eigenen Fall sind die Bußgeldstelle, die Fahrerlaubnisbehörde oder eine Rechtsberatung zuständig.</p>
+    <h2>Antwortzeit</h2><p>In der Regel innerhalb von fünf Werktagen, Fehlermeldungen zuerst. Alle Rechtswerte prüfen wir mindestens alle {REVIEW_CYCLE_MONTHS} Monate und bei jeder Gesetzesänderung.</p>
+    <h2>Anbieter</h2>
+    <LegalIdentity lang={lang} />
+    <p>Siehe <a href={route('terms', lang)}>Impressum</a>. Verantwortlich: {AUTHOR_NAME}. Stand: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

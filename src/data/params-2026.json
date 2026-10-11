@@ -1,0 +1,473 @@
+{
+  "_lisezmoi": "Alle Rechtswerte des Sites. Jede Zahl wurde im amtlichen Text gelesen (gesetze-im-internet.de, XML-Fassungen vom 11.10.2026) und ist hier mit Quelle abgelegt. Der Bußgeldkatalog selbst steht in bkat-2026.json (erzeugt von scripts/bkat/build-bkat.py).",
+  "year": 2026,
+  "retrieved_at": "2026-10-11",
+  "valid_from": "2026-01-01",
+  "valid_to": "2026-12-31",
+  "verfahren": {
+    "verwarnung_max": 55,
+    "gebuehr_satz": 0.05,
+    "gebuehr_min": 25,
+    "gebuehr_max": 7500,
+    "zustellung": 3.5,
+    "halterkosten_25a": 20,
+    "verjaehrung_monate": 6,
+    "verjaehrung_seit": "2026-07-01",
+    "einspruch_wochen": 2,
+    "fahrverbot_schonfrist_monate": 4,
+    "fahrverbot_frist_ohne_vorverbot_jahre": 2,
+    "beharrlich_kmh": 26,
+    "beharrlich_monate": 12,
+    "taeuschung_bussgeld_max": 30000
+  },
+  "toleranz": {
+    "kmh_bis_100": 3,
+    "prozent_ueber_100": 0.03,
+    "grenze_kmh": 100
+  },
+  "punkte": {
+    "vormerkung_bis": 3,
+    "ermahnung_ab": 4,
+    "verwarnung_ab": 6,
+    "entzug_ab": 8,
+    "ermahnung_reset": 5,
+    "verwarnung_reset": 7,
+    "seminar_abzug_bis": 5,
+    "seminar_sperre_jahre": 5,
+    "seminar_vorlage_wochen": 2,
+    "tilgung_1p_monate": 30,
+    "tilgung_2p_monate": 60,
+    "tilgung_3p_monate": 120,
+    "ueberliege_monate": 12,
+    "neuerteilung_sperre_monate": 6,
+    "auskunft_gebuehr": 0
+  },
+  "probezeit": {
+    "jahre": 2,
+    "verlaengerung_jahre": 2,
+    "beratung_frist_monate": 2,
+    "neuerteilung_sperre_monate": 3
+  },
+  "alkohol": {
+    "promille_owi": 0.5,
+    "aak_owi": 0.25,
+    "thc_ng": 3.5,
+    "mpu_promille": 1.6,
+    "mpu_aak": 0.8,
+    "anfaenger_alter": 21,
+    "relativ_promille": 0.3,
+    "straftat_promille": 1.1,
+    "rad_straftat_promille": 1.6
+  },
+  "kfz": {
+    "hubraum_benzin": 2,
+    "hubraum_diesel": 9.5,
+    "co2_frei_2021": 95,
+    "co2_stufen_2021": [
+      [
+        115,
+        2.0
+      ],
+      [
+        135,
+        2.2
+      ],
+      [
+        155,
+        2.5
+      ],
+      [
+        175,
+        2.9
+      ],
+      [
+        195,
+        3.4
+      ],
+      [
+        100000,
+        4.0
+      ]
+    ],
+    "co2_satz_2009": 2,
+    "co2_frei_bis_2011": 120,
+    "co2_frei_2012_2013": 110,
+    "co2_frei_ab_2014": 95,
+    "alt_saetze": {
+      "euro3plus": [
+        6.75,
+        15.44
+      ],
+      "euro2": [
+        7.36,
+        16.05
+      ],
+      "euro1": [
+        15.13,
+        27.35
+      ],
+      "ozonfrei": [
+        21.07,
+        33.29
+      ],
+      "sonstige": [
+        25.36,
+        37.58
+      ]
+    },
+    "krad_je_25ccm": 1.84,
+    "gewicht_stufen_bis_3500": [
+      [
+        2000,
+        11.25
+      ],
+      [
+        3000,
+        12.02
+      ],
+      [
+        3500,
+        12.78
+      ]
+    ],
+    "elektro_ermaessigung": 0.5,
+    "elektro_befreiung_jahre": 10,
+    "elektro_ez_von": "2011-05-18",
+    "elektro_ez_bis": "2030-12-31",
+    "elektro_befreiung_max": "2035-12-31",
+    "wohnmobil": {
+      "s4": {
+        "bis2000": 16,
+        "ueber2000": 10,
+        "max": 800
+      },
+      "s3": {
+        "bis2000": 24,
+        "ueber2000": 10,
+        "max": 1000
+      },
+      "sonst": {
+        "bis2000": 40,
+        "bis5000": 10,
+        "bis12000": 15,
+        "ueber12000": 25
+      }
+    },
+    "anhaenger_je_200kg": 7.46,
+    "anhaenger_max": 373.24,
+    "schwerbehindert_ermaessigung": 0.5
+  },
+  "hu": {
+    "pkw_erst_monate": 36,
+    "pkw_monate": 24,
+    "krad_monate": 24,
+    "wohnmobil_35_erst": 36,
+    "wohnmobil_35": 24,
+    "anhaenger_750_erst": 36,
+    "anhaenger_750": 24,
+    "gebuehr_pkw_min": 32.9,
+    "gebuehr_pkw_max": 51.6,
+    "gebuehr_krad_min": 25.4,
+    "gebuehr_krad_max": 38.3,
+    "au_mit_messung_min": 23.7,
+    "au_mit_messung_max": 109.8,
+    "au_ohne_messung_min": 13.4,
+    "au_ohne_messung_max": 61.8,
+    "au_faktor_bei_hu": 0.85,
+    "plakette": 0.6,
+    "ust": 0.19,
+    "ueberzogen": [
+      [
+        2,
+        0
+      ],
+      [
+        4,
+        15
+      ],
+      [
+        8,
+        25
+      ],
+      [
+        1000,
+        60
+      ]
+    ],
+    "ueberzogen_punkt_ab_monate": 8
+  },
+  "fuehrerschein": {
+    "antrag_pruefung": 5.1,
+    "ersterteilung": 35.7,
+    "eu_umschreibung": 28.1,
+    "theorie": 11.1,
+    "theorie_pc": 9.9,
+    "praxis_b": 109.1,
+    "praxis_a": 136.7,
+    "praxis_am": 109.1,
+    "neuerteilung_min": 35.7,
+    "neuerteilung_max": 258.5,
+    "ersatz_min": 20.4,
+    "ersatz_max": 38.3,
+    "verwarnung_fes": 17.9,
+    "drittstaat_monate": 6
+  },
+  "vignette": {
+    "pkw": {
+      "tag1": 9.6,
+      "tag10": 12.8,
+      "monat2": 32.0,
+      "jahr": 106.8
+    },
+    "krad": {
+      "tag1": 3.8,
+      "tag10": 5.1,
+      "monat2": 12.8,
+      "jahr": 42.7
+    },
+    "jahr_von": "2025-12-01",
+    "jahr_bis": "2027-01-31",
+    "wartefrist_tage": 18,
+    "ust_at": 0.2
+  },
+  "sources": {
+    "bkatv": {
+      "url": "https://www.gesetze-im-internet.de/bkatv_2013/BJNR049800013.html",
+      "label": {
+        "de": "Bußgeldkatalog-Verordnung (BKatV), zuletzt geändert durch Art. 4 V v. 12.8.2026 (BGBl. 2026 I Nr. 236)",
+        "en": "Fine Catalogue Ordinance (BKatV), last amended 12 Aug 2026 (BGBl. 2026 I No. 236)"
+      }
+    },
+    "bkatAnlage": {
+      "url": "https://www.gesetze-im-internet.de/bkatv_2013/anlage.html",
+      "label": {
+        "de": "BKatV, Anlage: Bußgeldkatalog (alle laufenden Nummern)",
+        "en": "BKatV annex: the fine catalogue (every numbered offence)"
+      }
+    },
+    "bkatAnhang": {
+      "url": "https://www.gesetze-im-internet.de/bkatv_2013/anhang.html",
+      "label": {
+        "de": "BKatV, Anhang: Tabellen 1 (Geschwindigkeit), 2 (Abstand), 3 und 4 (Erhöhung)",
+        "en": "BKatV appendix: tables 1 (speed), 2 (distance), 3 and 4 (increases)"
+      }
+    },
+    "fevAnl13": {
+      "url": "https://www.gesetze-im-internet.de/fev_2010/anlage_13.html",
+      "label": {
+        "de": "FeV Anlage 13: Bewertung mit Punkten im Fahreignungsregister",
+        "en": "Driving Licence Ordinance (FeV) annex 13: points per offence"
+      }
+    },
+    "fevAnl12": {
+      "url": "https://www.gesetze-im-internet.de/fev_2010/anlage_12.html",
+      "label": {
+        "de": "FeV Anlage 12: A- und B-Verstöße in der Probezeit",
+        "en": "FeV annex 12: A and B offences during the probationary period"
+      }
+    },
+    "fev13": {
+      "url": "https://www.gesetze-im-internet.de/fev_2010/__13.html",
+      "label": {
+        "de": "§ 13 FeV: MPU bei Alkoholproblematik (1,6 Promille)",
+        "en": "Section 13 FeV: MPU for alcohol (1.6 per mille)"
+      }
+    },
+    "fev31": {
+      "url": "https://www.gesetze-im-internet.de/fev_2010/__31.html",
+      "label": {
+        "de": "§ 31 FeV: Umschreibung von Führerscheinen aus Drittstaaten",
+        "en": "Section 31 FeV: exchanging a non-EU driving licence"
+      }
+    },
+    "fevAnl11": {
+      "url": "https://www.gesetze-im-internet.de/fev_2010/anlage_11.html",
+      "label": {
+        "de": "FeV Anlage 11: Staatenliste für die erleichterte Umschreibung",
+        "en": "FeV annex 11: countries with simplified licence exchange"
+      }
+    },
+    "stvg2a": {
+      "url": "https://www.gesetze-im-internet.de/stvg/__2a.html",
+      "label": {
+        "de": "§ 2a StVG: Fahrerlaubnis auf Probe",
+        "en": "Section 2a Road Traffic Act (StVG): probationary licence"
+      }
+    },
+    "stvg4": {
+      "url": "https://www.gesetze-im-internet.de/stvg/__4.html",
+      "label": {
+        "de": "§ 4 StVG: Fahreignungs-Bewertungssystem (Punkte, Maßnahmen, Seminar)",
+        "en": "Section 4 StVG: the Flensburg points system"
+      }
+    },
+    "stvg24a": {
+      "url": "https://www.gesetze-im-internet.de/stvg/__24a.html",
+      "label": {
+        "de": "§ 24a StVG: 0,5-Promille-Grenze und THC-Grenzwert",
+        "en": "Section 24a StVG: 0.5 per mille and THC limit"
+      }
+    },
+    "stvg24c": {
+      "url": "https://www.gesetze-im-internet.de/stvg/__24c.html",
+      "label": {
+        "de": "§ 24c StVG: Alkohol- und Cannabisverbot für Fahranfänger",
+        "en": "Section 24c StVG: zero alcohol and cannabis for new drivers"
+      }
+    },
+    "stvg25": {
+      "url": "https://www.gesetze-im-internet.de/stvg/__25.html",
+      "label": {
+        "de": "§ 25 StVG: Fahrverbot und Viermonatsfrist",
+        "en": "Section 25 StVG: driving bans and the four-month window"
+      }
+    },
+    "stvg26": {
+      "url": "https://www.gesetze-im-internet.de/stvg/__26.html",
+      "label": {
+        "de": "§ 26 StVG: Verfolgungsverjährung sechs Monate (seit 1.7.2026)",
+        "en": "Section 26 StVG: six-month limitation period (since 1 July 2026)"
+      }
+    },
+    "stvg29": {
+      "url": "https://www.gesetze-im-internet.de/stvg/__29.html",
+      "label": {
+        "de": "§ 29 StVG: Tilgung der Eintragungen im Fahreignungsregister",
+        "en": "Section 29 StVG: deletion of register entries"
+      }
+    },
+    "bgbl2026_142": {
+      "url": "https://www.recht.bund.de/bgbl/1/2026/142/VO.html",
+      "label": {
+        "de": "Fünftes Gesetz zur Änderung des StVG vom 12.5.2026 (BGBl. 2026 I Nr. 142)",
+        "en": "Fifth Act amending the StVG of 12 May 2026 (BGBl. 2026 I No. 142)"
+      }
+    },
+    "owig107": {
+      "url": "https://www.gesetze-im-internet.de/owig_1968/__107.html",
+      "label": {
+        "de": "§ 107 OWiG: Gebühren und Auslagen im Bußgeldverfahren",
+        "en": "Section 107 Administrative Offences Act: fees and expenses"
+      }
+    },
+    "stgb316": {
+      "url": "https://www.gesetze-im-internet.de/stgb/__316.html",
+      "label": {
+        "de": "§ 316 StGB: Trunkenheit im Verkehr",
+        "en": "Section 316 Criminal Code: drunk driving"
+      }
+    },
+    "stvo3": {
+      "url": "https://www.gesetze-im-internet.de/stvo_2013/__3.html",
+      "label": {
+        "de": "§ 3 StVO: Geschwindigkeit",
+        "en": "Section 3 Road Traffic Regulations (StVO): speed"
+      }
+    },
+    "ptb": {
+      "url": "https://www.ptb.de/cms/ptb/fachabteilungen/abt1/fb-13/ag-131/fb-13-grundsatzfragen.html",
+      "label": {
+        "de": "PTB: Verkehrsfehlergrenzen von Geschwindigkeitsmessgeräten (3 km/h bzw. 3 %)",
+        "en": "PTB (national metrology institute): error limits of speed meters"
+      }
+    },
+    "kbaAuskunft": {
+      "url": "https://www.kba.de/DE/Themen/ZentraleRegister/FAER/Auskunft/faer_auskunft_node.html",
+      "label": {
+        "de": "Kraftfahrt-Bundesamt: Auskunft aus dem Fahreignungsregister (gebührenfrei)",
+        "en": "Federal Motor Transport Authority (KBA): free register extract"
+      }
+    },
+    "kbaFaer": {
+      "url": "https://www.kba.de/DE/Themen/ZentraleRegister/FAER/faer_node.html",
+      "label": {
+        "de": "Kraftfahrt-Bundesamt: Fahreignungsregister",
+        "en": "KBA: driving aptitude register (Flensburg)"
+      }
+    },
+    "kraftstg9": {
+      "url": "https://www.gesetze-im-internet.de/kraftstg/__9.html",
+      "label": {
+        "de": "§ 9 KraftStG: Steuersätze (Hubraum, CO2, Gewicht)",
+        "en": "Section 9 Motor Vehicle Tax Act (KraftStG): rates"
+      }
+    },
+    "kraftstg3d": {
+      "url": "https://www.gesetze-im-internet.de/kraftstg/__3d.html",
+      "label": {
+        "de": "§ 3d KraftStG: Steuerbefreiung für Elektrofahrzeuge (Erstzulassung bis 2030, längstens 2035)",
+        "en": "Section 3d KraftStG: electric-car exemption (registered by 2030, until 2035 at most)"
+      }
+    },
+    "kraftstg3a": {
+      "url": "https://www.gesetze-im-internet.de/kraftstg/__3a.html",
+      "label": {
+        "de": "§ 3a KraftStG: Vergünstigungen für schwerbehinderte Menschen",
+        "en": "Section 3a KraftStG: relief for severely disabled people"
+      }
+    },
+    "kraftstg": {
+      "url": "https://www.gesetze-im-internet.de/kraftstg/",
+      "label": {
+        "de": "Kraftfahrzeugsteuergesetz, zuletzt geändert durch Art. 1 G v. 22.12.2025 (BGBl. 2025 I Nr. 342)",
+        "en": "Motor Vehicle Tax Act, last amended 22 Dec 2025 (BGBl. 2025 I No. 342)"
+      }
+    },
+    "zoll": {
+      "url": "https://www.zoll.de/DE/Privatpersonen/Kraftfahrzeugsteuer/kraftfahrzeugsteuer_node.html",
+      "label": {
+        "de": "Zoll: Kraftfahrzeugsteuer für Privatpersonen",
+        "en": "German Customs (Zoll): vehicle tax for private owners"
+      }
+    },
+    "bmfRechner": {
+      "url": "https://www.bundesfinanzministerium.de/Web/DE/Service/Apps_Rechner/KfzRechner/KfzRechner.html",
+      "label": {
+        "de": "Bundesfinanzministerium: Kfz-Steuer-Rechner",
+        "en": "Federal Ministry of Finance: vehicle tax calculator"
+      }
+    },
+    "stvzoAnl8": {
+      "url": "https://www.gesetze-im-internet.de/stvzo_2012/anlage_viii.html",
+      "label": {
+        "de": "StVZO Anlage VIII: Fristen der Hauptuntersuchung",
+        "en": "StVZO annex VIII: MOT (HU) intervals"
+      }
+    },
+    "gebost": {
+      "url": "https://www.gesetze-im-internet.de/stgebo_2011/anlage.html",
+      "label": {
+        "de": "Gebührenordnung für Maßnahmen im Straßenverkehr (GebOSt), Gebührentarif",
+        "en": "Road traffic fee schedule (GebOSt)"
+      }
+    },
+    "asfinag": {
+      "url": "https://www.asfinag.at/maut-vignette/vignette/",
+      "label": {
+        "de": "ASFINAG: Vignette, Tarife 2026",
+        "en": "ASFINAG: Austrian vignette, 2026 prices"
+      }
+    },
+    "asfinagFolder": {
+      "url": "https://media.asfinag.at/media/1mpjid2j/asf_vignettenfolder_2026_de.pdf",
+      "label": {
+        "de": "ASFINAG: Vignettenfolder 2026 (Gültigkeit 1.12.2025 bis 31.1.2027)",
+        "en": "ASFINAG vignette leaflet 2026 (valid 1 Dec 2025 to 31 Jan 2027)"
+      }
+    },
+    "propk": {
+      "url": "https://www.polizei-beratung.de/aktuelles/detailansicht/auch-an-karneval-und-zur-fasnacht-gilt-kein-alkohol-am-steuer/",
+      "label": {
+        "de": "Polizeiliche Kriminalprävention der Länder und des Bundes: Promillegrenzen 0,3 / 0,5 / 1,1 / 1,6",
+        "en": "German police prevention programme (ProPK): 0.3 / 0.5 / 1.1 / 1.6 per mille limits"
+      }
+    },
+    "fev29": {
+      "url": "https://www.gesetze-im-internet.de/fev_2010/__29.html",
+      "label": {
+        "de": "§ 29 FeV: ausländische Fahrerlaubnisse, sechs Monate nach Wohnsitznahme",
+        "en": "Section 29 FeV: foreign licences, six months after taking up residence"
+      }
+    }
+  }
+}
