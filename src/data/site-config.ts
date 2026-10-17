@@ -27,7 +27,7 @@ export const GOOGLE_VERIFY_CODE = '';
  *  aucun bandeau, aucun cookie, Clarity chargé en mode sans cookie (consentv2 denied).
  *  'opt-in' / 'notice' ne servent plus qu'aux sites anciens qui les portent encore. */
 export const CONSENT_MODE: 'opt-in' | 'notice' | 'none' = 'none';
-export const GA4_ID = '';
+export const GA4_ID = 'G-L2X3H4LCR9';
 /** Projet Microsoft Clarity (compte amradif), chargé sans cookie. Vide = aucune mesure. */
 export const CLARITY_ID = 'yw5hvaduha';
 export const INDEXNOW_KEY = '9c3e7a1f5b2d48e6a0f4c8b1d7e3a592';
